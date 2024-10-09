@@ -18,12 +18,15 @@ class SuperAdminSeeder extends Seeder
         $superAdmin = User::where('email', 'superadmin@example.com')->first();
 
         if (!$superAdmin) {
-            User::create([
+            $superAdmin = User::create([
                 'name' => 'Super Admin',
                 'email' => 'superadmin@example.com',
-                'password' => Hash::make('12345678'), // Secure password
-                'role' => 'super-admin', // Assuming you have a 'role' field, or use a Role model
+                'password' => Hash::make('12345678'),
+                'role' => 'super-admin',
             ]);
+
+            // Assign the super-admin role
+            $superAdmin->assignRole('super-admin');
 
             $this->command->info('Super Admin user created successfully!');
         } else {
